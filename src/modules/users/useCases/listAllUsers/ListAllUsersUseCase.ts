@@ -9,7 +9,14 @@ class ListAllUsersUseCase {
   constructor(private usersRepository: IUsersRepository) {}
 
   execute({ user_id }: IRequest): User[] {
-    // Complete aqui
+  const userFondedById = this.usersRepository.findById(user_id); 
+
+    if(userFondedById && userFondedById.admin === true) {
+      const listAllUsers = this.usersRepository.list();
+      return listAllUsers;
+    }
+    
+    throw new Error("User not avaliable to acess");
   }
 }
 
